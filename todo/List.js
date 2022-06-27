@@ -1,9 +1,5 @@
 import React from 'react'
-import { 
-  View,
-} from 'react-native'
-import styles from '../css/styles'
-import Task from './Task'
+import { View } from 'react-native'
 
 class List extends React.Component {
   constructor(props) {

@@ -9,18 +9,17 @@ import {
 import styles from '../css/styles'
 import DateTimePicker from '@react-native-community/datetimepicker';
 
-class MyForm extends React.Component {
+class Form extends React.Component {
   constructor(props){
     super(props);
     this.state = {
       tarefas: [],
-      novaTarefa: [],
       text: '',
       date: new Date(),
       done: false,
-      color: '',
+      color: this.props.color,
       index_editing: -1,
-      isEditing: this.props.indexEditing,
+      isEditing: this.props.indexEditing || -1,
       tarefa: this.props.tarefa
     };
 
@@ -71,20 +70,16 @@ class MyForm extends React.Component {
 
 
   handleSubmit () {
-    let tarefa = Object.assign({}, this.state.tarefa)
-    !this.props.onUpdate || this.props.onUpdate(this.state.isEditing, tarefa)
+    let tarefa = Object.assign({}, this.state.tarefa);
+    return !this.props.onUpdate || this.props.onUpdate(this.state.isEditing, tarefa);
   }
 
-  updateTarefas(){
-    this.setState({tarefas: this.state.tarefas})
+  updateTarefas() {
+    this.setState({ tarefas: this.state.tarefas })
   }
 
-  changeColor(){
-    return (
-      this.props.color == ''
-      ? '#ffffff'
-      : this.props.color
-    )
+  changeColor() {
+    return this.state.color === '' ? '#ffffff' : this.state.color;
   }
 
   render () {
@@ -103,11 +98,7 @@ class MyForm extends React.Component {
               ? (text) => this.setState({text})
               : this.handleInputChange.bind(this, 'text')
             }
-            value = {
-              this.state.isEditing === this.state.index_editing
-              ? this.state.text
-              : tarefa[isEditing].text
-            }
+            value = {this.state.text}
             placeholderTextColor = '#c5c5c9'
             placeholder = "Insira uma nova tarefa"
             underlineColorAndroid = 'transparent'
@@ -116,11 +107,7 @@ class MyForm extends React.Component {
         <View style={styles.wrapperDatePicker}>
             <Text style={styles.textFormTitle}>{'Data de conclusão'.toUpperCase()}</Text>
             <DateTimePicker
-              date={
-                this.state.isEditing === this.state.index_editing
-                ? this.state.date
-                : tarefa[isEditing].date
-              }
+              date={this.state.date}
               value={new Date()}
               mode="date"
               minimumDate={new Date()}
@@ -194,4 +181,4 @@ class MyForm extends React.Component {
   }
 }
 
-export default MyForm
+export default Form;

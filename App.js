@@ -1,7 +1,6 @@
 import React from 'react';
-import { 
-  StatusBar, 
-  Text, 
+import {
+  Text,
   View,
   TouchableHighlight,
   Image,
@@ -31,20 +30,16 @@ export default class App extends React.Component {
     this.handleToggleForm = this.handleToggleForm.bind(this)
     this.handleChangePriority = this.handleChangePriority.bind(this)
     this.renderMappingTasks = this.renderMappingTasks.bind(this)
-    
-  };
 
-  componentDidMount(){
-    
-  }
+  };
 
   handleAddListItem(tarefas){
     let listaTarefas = this.state.listaTarefas.slice()
     listaTarefas.push(tarefas)
     this.setState({
-      listaTarefas: listaTarefas, 
+      listaTarefas: listaTarefas,
       toggleShowForm: false,
-      color: '' 
+      color: ''
     })
   }
 
@@ -79,7 +74,7 @@ export default class App extends React.Component {
 
   renderTasks(item, index){
     return (
-      <Task 
+      <Task
         key={'item' + index}
         tarefa={item}
         isEditing={index === this.state.index_editing}
@@ -92,7 +87,7 @@ export default class App extends React.Component {
   handleToggleForm(){
     this.setState({toggleShowForm: true})
   }
-  
+
   handleChangePriority(newColor){
     let color = newColor
     this.setState({color})
@@ -109,7 +104,7 @@ export default class App extends React.Component {
 
     let {listaTarefas, color} = this.state
     return (
-      
+
       !this.state.toggleShowForm
       ?
       <View style={this.state.listaTarefas == '' ? styles.wrapperAppBlack: styles.wrapperApp}>
@@ -117,7 +112,7 @@ export default class App extends React.Component {
           <Image source={require('./img/logo.png')} />
         </View>
         <View>
-          <List 
+          <List
                 toggleShowForm = {this.handleToggleForm.bind(this)}
                 mappingTasks = {this.renderMappingTasks}
           />
@@ -130,7 +125,7 @@ export default class App extends React.Component {
               Não tens nenhuma tarefa. Queres começar a adicionar tarefas?
               </Text>
             </View>
-          : 
+          :
             <View style={{display: 'none'}}/>
           }
         <TouchableHighlight
@@ -159,7 +154,7 @@ export default class App extends React.Component {
               changePriority={this.handleChangePriority}
               onUpdate={this.handleUpdateListItem.bind(this)}
               color={color}
-              tarefa = {this.state.listaTarefas}
+              tarefa = {listaTarefas}
             />
       </View>
     );

@@ -1,14 +1,9 @@
-import React from 'react'
-import {
-  View,
-  Text,
-  CheckBox,
-  TouchableWithoutFeedback,
-  TextInput
-} from 'react-native'
-import styles from '../css/styles'
-import Icon from 'react-native-vector-icons/FontAwesome'
-import DotMenu from './DotMenu'
+import React from 'react';
+import CheckBox from 'expo-checkbox';
+import { View, Text, TouchableWithoutFeedback } from 'react-native';
+import styles from '../css/styles';
+import Icon from 'react-native-vector-icons/FontAwesome';
+import DotMenu from './DotMenu';
 
 class List extends React.Component {
   constructor(props) {
@@ -72,8 +67,10 @@ class List extends React.Component {
 
               <View>
                 <CheckBox
+                  disabled={false}
+                  value = {this.state.tarefasCheck}
                   onValueChange = {this.handleToggleDone}
-                  value = {this.state.tarefasCheck}/>
+                />
               </View>
 
               <View style={styles.wrapperTextAndDate}>
