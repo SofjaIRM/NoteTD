@@ -1,13 +1,13 @@
 import React from 'react'
-import { 
-  TextInput, 
-  View, 
-  TouchableHighlight, 
+import {
+  TextInput,
+  View,
+  TouchableHighlight,
   Text,
   Alert
 } from 'react-native'
 import styles from '../css/styles'
-import DatePicker from 'react-native-datepicker'
+import DateTimePicker from '@react-native-community/datetimepicker';
 
 class MyForm extends React.Component {
   constructor(props){
@@ -16,7 +16,7 @@ class MyForm extends React.Component {
       tarefas: [],
       novaTarefa: [],
       text: '',
-      date: '',
+      date: new Date(),
       done: false,
       color: '',
       index_editing: -1,
@@ -34,12 +34,10 @@ class MyForm extends React.Component {
       tarefa: newProps.tarefa
     })
   }
-  
+
   handleInputChange (tarefaIndex, value) {
     let tarefa = Object.assign({},this.state.tarefa)
-    console.log('tarefa' + tarefa)
     tarefa[tarefaIndex] = value
-    console.log('tarefa-tarefaindex: ' + tarefa[tarefaIndex])
     this.setState({
       tarefa
     })
@@ -60,7 +58,7 @@ class MyForm extends React.Component {
         color: ''
       })
       !this.props.onPress || this.props.onPress(tarefas)
-      
+
     }
 
     else{
@@ -75,7 +73,6 @@ class MyForm extends React.Component {
   handleSubmit () {
     let tarefa = Object.assign({}, this.state.tarefa)
     !this.props.onUpdate || this.props.onUpdate(this.state.isEditing, tarefa)
-    console.log('tou a ler')
   }
 
   updateTarefas(){
@@ -84,17 +81,16 @@ class MyForm extends React.Component {
 
   changeColor(){
     return (
-      this.props.color == '' 
-      ? '#ffffff' 
+      this.props.color == ''
+      ? '#ffffff'
       : this.props.color
     )
   }
 
   render () {
 
-    const {text, date} = this.state.tarefa
-    let {tarefa, isEditing} = this.state
-    console.log(this.props.tarefadif)
+    const {text, date} = this.state.tarefa;
+    let {tarefa, isEditing} = this.state;
 
     return (
       <View style={styles.wrapperForm}>
@@ -104,12 +100,12 @@ class MyForm extends React.Component {
             style = {[styles.input, {backgroundColor: this.changeColor()}]}
             onChangeText = {
               this.state.isEditing === this.state.index_editing
-              ? (text) => this.setState({text}) 
+              ? (text) => this.setState({text})
               : this.handleInputChange.bind(this, 'text')
             }
             value = {
               this.state.isEditing === this.state.index_editing
-              ? this.state.text 
+              ? this.state.text
               : tarefa[isEditing].text
             }
             placeholderTextColor = '#c5c5c9'
@@ -119,47 +115,21 @@ class MyForm extends React.Component {
         </View>
         <View style={styles.wrapperDatePicker}>
             <Text style={styles.textFormTitle}>{'Data de conclusão'.toUpperCase()}</Text>
-            <DatePicker
-              style={{width: '100%'}}
+            <DateTimePicker
               date={
-                this.state.isEditing === this.state.index_editing 
+                this.state.isEditing === this.state.index_editing
                 ? this.state.date
                 : tarefa[isEditing].date
               }
+              value={new Date()}
               mode="date"
-              minDate={new Date()}
-              format="DD-MM-YYYY"
+              minimumDate={new Date()}
               onDateChange={
                 this.state.isEditing === this.state.index_editing
                 ? (date) => this.setState({date})
                 : this.handleInputChange.bind(this, text)
               }
-              hideText={false}
-              placeholder = 'Quando quer concluir esta tarefa?'
-              customStyles={{
-                dateIcon: {
-                  width: 43,
-                  height: 43,
-                  marginLeft: 3,
-                  marginRight: 0,
-                },
-                dateInput: {
-                  borderWidth: 0.5,
-                  height: 37,
-                  width: '100%',
-                  borderRadius: 1,
-                  borderColor: '#a7a7a7',
-                  padding: 10,
-                  
-                },
-                placeholderText: {
-                  fontSize: 16,
-                },
-                dateTouchBody:{
-                  flexDirection: 'column',
-                  height: 80,
-                }
-                }}
+              title = 'Quando quer concluir esta tarefa?'
               />
           </View>
           <View>
@@ -195,10 +165,10 @@ class MyForm extends React.Component {
               <Text style={styles.textPriority}>Baixa</Text>
             </TouchableHighlight>
           </View>
-          <TouchableHighlight 
+          <TouchableHighlight
             onPress = {
-              this.state.isEditing === this.state.index_editing 
-              ? this.handleSubmitForm.bind(this) 
+              this.state.isEditing === this.state.index_editing
+              ? this.handleSubmitForm.bind(this)
               : this.handleSubmit
             }
             style={styles.bottonForm}
@@ -219,7 +189,7 @@ class MyForm extends React.Component {
             <Text style={styles.bottonFormCancelTitle}>Cancelar</Text>
           </TouchableHighlight>
       </View>
-      
+
     )
   }
 }

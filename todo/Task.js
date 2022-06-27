@@ -1,17 +1,14 @@
 import React from 'react'
-import { 
-  View, 
+import {
+  View,
   Text,
-  TouchableHighlight,
   CheckBox,
   TouchableWithoutFeedback,
   TextInput
 } from 'react-native'
-import DatePicker from 'react-native-datepicker'
 import styles from '../css/styles'
 import Icon from 'react-native-vector-icons/FontAwesome'
 import DotMenu from './DotMenu'
-import Form from './Form'
 
 class List extends React.Component {
   constructor(props) {
@@ -52,7 +49,7 @@ class List extends React.Component {
     }
     else {
         !this.props.onEditing || this.props.onEditing(this)
-        
+
     }
   }
 
@@ -69,17 +66,16 @@ class List extends React.Component {
 
   render () {
     const {text, date, color} = this.state.tarefa
-    console.log('task: ' + this.state.tarefa.text)
     return (
           <View>
             <View style={[styles.wrapperTasks, {backgroundColor: (color == '') ? '#eeeeee' : color}]}>
-                        
+
               <View>
-                <CheckBox 
+                <CheckBox
                   onValueChange = {this.handleToggleDone}
                   value = {this.state.tarefasCheck}/>
               </View>
-              
+
               <View style={styles.wrapperTextAndDate}>
                 <View>
                   <Text style={styles.taskText}>{text}</Text>
@@ -93,9 +89,9 @@ class List extends React.Component {
             </View>
 
             {
-              (this.state.dotMenu == true) 
+              (this.state.dotMenu == true)
               ? <DotMenu onTaskRemove={this.props.onRemove}
-                        onTaskEdit={this.props.onEditing}/> 
+                        onTaskEdit={this.props.onEditing}/>
               : <Text style={{position: 'absolute'}}/>
             }
           </View>
