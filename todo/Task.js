@@ -60,7 +60,7 @@ class List extends React.Component {
   }
 
   render () {
-    const {text, date, color} = this.state.tarefa
+    const {text, date, currentColor: color} = this.state.tarefa
     return (
           <View>
             <View style={[styles.wrapperTasks, {backgroundColor: (color == '') ? '#eeeeee' : color}]}>

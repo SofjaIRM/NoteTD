@@ -20,7 +20,7 @@ export default class App extends React.Component {
       toggleShowForm: false,
       color: '',
       value:'',
-      index_editing: -1,
+      indexEditing: -1,
     };
 
     this.handleUpdateListItem = this.handleUpdateListItem.bind(this)
@@ -49,7 +49,7 @@ export default class App extends React.Component {
     this.setState({
       listaTarefas: tarefas,
       toggleShowForm: false,
-      index_editing: -1,
+      indexEditing: -1,
     })
   }
 
@@ -60,7 +60,7 @@ export default class App extends React.Component {
   }
 
   handleSomeEditing (index) {
-    this.setState({index_editing: index})
+    this.setState({indexEditing: index})
     this.handleToggleForm()
   }
 
@@ -77,7 +77,7 @@ export default class App extends React.Component {
       <Task
         key={'item' + index}
         tarefa={item}
-        isEditing={index === this.state.index_editing}
+        isEditing={index === this.state.indexEditing}
         onEditing={this.handleSomeEditing.bind(this, index)}
         onRemove={this.handleRemoveTask.bind(this, index)}
       />
@@ -96,7 +96,7 @@ export default class App extends React.Component {
   handleCancelAddList(){
     this.setState({
       toggleShowForm: false,
-      index_editing: -1,
+      indexEditing: -1,
     })
   }
 
@@ -149,7 +149,7 @@ export default class App extends React.Component {
       <View style={styles.wrapperApp}>
             <Form
               onPress={this.handleAddListItem}
-              indexEditing={this.state.index_editing}
+              indexEditing={this.state.indexEditing}
               cancelAddList={this.handleCancelAddList}
               changePriority={this.handleChangePriority}
               onUpdate={this.handleUpdateListItem.bind(this)}

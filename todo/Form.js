@@ -1,62 +1,57 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react';
 import {
   TextInput,
   View,
   TouchableHighlight,
   Text,
   Alert
-} from 'react-native'
-import styles from '../css/styles'
+} from 'react-native';
+import styles from '../css/styles';
 import DateTimePicker from '@react-native-community/datetimepicker';
 
-class Form extends React.Component {
-  constructor(props){
-    super(props);
-    this.state = {
-      tarefas: [],
-      text: '',
-      date: new Date(),
-      done: false,
-      color: this.props.color,
-      index_editing: -1,
-      isEditing: this.props.indexEditing || -1,
-      tarefa: this.props.tarefa
-    };
+function Form({
+  color,
+  tarefa,
+  indexEditing,
+  onPress,
+  onUpdate,
+  changePriority,
+  cancelAddList
+}) {
+  const [tarefas, setTarefas] = useState([]);
+  const [text, setText] = useState('');
+  const [date, setDate] = useState(new Date().toISOString().slice(0, 10));
+  const [done, setDone] = useState(false);
+  const [currentColor, setCurrentColor] = useState(color);
+  const [isEditing, setIsEditing] = useState(indexEditing);
+  const [currentTarefa, setCurrentTarefa] = useState(tarefa);
 
-    this.handleInputChange = this.handleInputChange.bind(this)
-    this.handleSubmit = this.handleSubmit.bind(this)
+  useEffect(() => {
+    setIsEditing(indexEditing);
+    setCurrentTarefa(tarefa);
+  });
+
+  const handleInputChange = (tarefaIndex, key, value) => {
+    let tarefa = Object.assign({}, currentTarefa);
+    tarefa[tarefaIndex][key] = value;
+    setCurrentTarefa(tarefa);
   }
 
-  componentWillReceiveProps(newProps){
-    this.setState({
-      isEditing: newProps.isEditing,
-      tarefa: newProps.tarefa
-    })
-  }
-
-  handleInputChange (tarefaIndex, value) {
-    let tarefa = Object.assign({},this.state.tarefa)
-    tarefa[tarefaIndex] = value
-    this.setState({
-      tarefa
-    })
-  }
-
-  handleSubmitForm () {
-    if (this.state.text){
+  const handleSubmitForm = () => {
+    if (text){
       let tarefas = {
-        text: this.state.text,
-        date: this.state.date,
-        done: this.state.done,
-        color: this.props.color,
+        text,
+        date,
+        done,
+        currentColor,
       }
-      this.setState({
+      setCurrentTarefa({
         text: '',
         date: '',
         done: false,
         color: ''
       })
-      !this.props.onPress || this.props.onPress(tarefas)
+      !onPress || onPress(tarefas)
 
     }
 
@@ -69,116 +64,102 @@ class Form extends React.Component {
   }
 
 
-  handleSubmit () {
-    let tarefa = Object.assign({}, this.state.tarefa);
-    return !this.props.onUpdate || this.props.onUpdate(this.state.isEditing, tarefa);
+  const handleSubmit = () => {
+    let tarefa = Object.assign({}, currentTarefa);
+    return !onUpdate || onUpdate(isEditing, tarefa);
   }
 
-  updateTarefas() {
-    this.setState({ tarefas: this.state.tarefas })
-  }
+  const changeColor = () => currentColor === '' ? '#ffffff' : currentColor;
 
-  changeColor() {
-    return this.state.color === '' ? '#ffffff' : this.state.color;
-  }
+  const isEditingTask = isEditing === indexEditing;
 
-  render () {
-
-    const {text, date} = this.state.tarefa;
-    let {tarefa, isEditing} = this.state;
-
-    return (
-      <View style={styles.wrapperForm}>
-        <View style={styles.wrapperTextInput}>
-          <Text style={styles.textFormTitle}>{'Tarefa'.toUpperCase()}</Text>
-          <TextInput
-            style = {[styles.input, {backgroundColor: this.changeColor()}]}
-            onChangeText = {
-              this.state.isEditing === this.state.index_editing
-              ? (text) => this.setState({text})
-              : this.handleInputChange.bind(this, 'text')
-            }
-            value = {this.state.text}
-            placeholderTextColor = '#c5c5c9'
-            placeholder = "Insira uma nova tarefa"
-            underlineColorAndroid = 'transparent'
-          />
-        </View>
-        <View style={styles.wrapperDatePicker}>
-            <Text style={styles.textFormTitle}>{'Data de conclusão'.toUpperCase()}</Text>
-            <DateTimePicker
-              date={this.state.date}
-              value={new Date()}
-              mode="date"
-              minimumDate={new Date()}
-              onDateChange={
-                this.state.isEditing === this.state.index_editing
-                ? (date) => this.setState({date})
-                : this.handleInputChange.bind(this, text)
-              }
-              title = 'Quando quer concluir esta tarefa?'
-              />
-          </View>
-          <View>
-            <Text style={styles.textFormTitle}>{'Prioridade'.toUpperCase()}</Text>
-
-            <TouchableHighlight
-              style={[{backgroundColor: '#f54949'}, styles.buttonPriority]}
-              onPress = {
-                this.state.isEditing === this.state.index_editing
-                ? () => this.props.changePriority('#f54949')
-                : this.handleInputChange.bind(this, 'color', '#f54949')
-              }>
-              <Text style={styles.textPriority}>Alta</Text>
-            </TouchableHighlight>
-
-            <TouchableHighlight
-              style={[{backgroundColor: '#edc53a'}, styles.buttonPriority]}
-              onPress = {
-                this.state.isEditing === this.state.index_editing
-                ? () => this.props.changePriority('#edc53a')
-                : this.handleInputChange.bind(this, 'color', '#edc53a')
-              }>
-              <Text style={styles.textPriority}>Media</Text>
-            </TouchableHighlight>
-
-            <TouchableHighlight
-              style={[{backgroundColor: '#c7e952'}, styles.buttonPriority]}
-              onPress = {
-                this.state.isEditing === this.state.index_editing
-                ? () => this.props.changePriority('#c7e952')
-                : this.handleInputChange.bind(this, 'color', '#c7e952')
-              }>
-              <Text style={styles.textPriority}>Baixa</Text>
-            </TouchableHighlight>
-          </View>
-          <TouchableHighlight
-            onPress = {
-              this.state.isEditing === this.state.index_editing
-              ? this.handleSubmitForm.bind(this)
-              : this.handleSubmit
-            }
-            style={styles.bottonForm}
-            value={this.state.tarefas}
-          >
-            <Text style={styles.bottonFormTitle}>
-              {
-                this.state.isEditing === this.state.index_editing
-                ?'Adicionar tarefa'.toUpperCase()
-                :'Guardar'.toUpperCase()
-              }
-            </Text>
-          </TouchableHighlight>
-
-          <TouchableHighlight
-            onPress = {this.props.cancelAddList}
-            style={styles.bottonFormCancel}>
-            <Text style={styles.bottonFormCancelTitle}>Cancelar</Text>
-          </TouchableHighlight>
+  return (
+    <View style={styles.wrapperForm}>
+      <View style={styles.wrapperTextInput}>
+        <Text style={styles.textFormTitle}>{'Tarefa'.toUpperCase()}</Text>
+        <TextInput
+          style = {[styles.input, { backgroundColor: changeColor() }]}
+          onChangeText = {
+            isEditingTask
+            ? (text) => setText(text)
+            : handleInputChange(this, 'text')
+          }
+          value = {text}
+          placeholderTextColor = '#c5c5c9'
+          placeholder = "Insira uma nova tarefa"
+          underlineColorAndroid = 'transparent'
+        />
       </View>
+      <View style={styles.wrapperDatePicker}>
+          <Text style={styles.textFormTitle}>{'Data de conclusão'.toUpperCase()}</Text>
+          <DateTimePicker
+            date={date}
+            value={new Date()}
+            mode="date"
+            minimumDate={new Date()}
+            onDateChange={
+              isEditingTask
+              ? (date) => setDate(date)
+              : handleInputChange(indexEditing, 'date', date)
+            }
+            title = 'Quando quer concluir esta tarefa?'
+            />
+        </View>
+        <View>
+          <Text style={styles.textFormTitle}>{'Prioridade'.toUpperCase()}</Text>
+          <TouchableHighlight
+            style={[{backgroundColor: '#f54949'}, styles.buttonPriority]}
+            onPress = {
+              isEditingTask
+              ? () => changePriority('#f54949')
+              : handleInputChange(indexEditing, 'color', '#f54949')
+            }>
+            <Text style={styles.textPriority}>Alta</Text>
+          </TouchableHighlight>
+          <TouchableHighlight
+            style={[{backgroundColor: '#edc53a'}, styles.buttonPriority]}
+            onPress = {
+              isEditingTask
+              ? () => changePriority('#edc53a')
+              : handleInputChange(indexEditing, 'color', '#edc53a')
+            }>
+            <Text style={styles.textPriority}>Media</Text>
+          </TouchableHighlight>
+          <TouchableHighlight
+            style={[{backgroundColor: '#c7e952'}, styles.buttonPriority]}
+            onPress = {
+              isEditingTask
+              ? () => changePriority('#c7e952')
+              : handleInputChange(indexEditing, 'color', '#c7e952')
+            }>
+              <Text style={styles.textPriority}>Baixa</Text>
+          </TouchableHighlight>
+        </View>
+        <TouchableHighlight
+          onPress = {
+            isEditingTask
+            ? (value) => handleSubmitForm(value)
+            : handleSubmit
+          }
+          style={styles.bottonForm}
+          value={tarefas}
+        >
+          <Text style={styles.bottonFormTitle}>
+            {
+              isEditingTask
+              ?'Adicionar tarefa'.toUpperCase()
+              :'Guardar'.toUpperCase()
+            }
+          </Text>
+        </TouchableHighlight>
 
-    )
-  }
+        <TouchableHighlight
+          onPress = {cancelAddList}
+          style={styles.bottonFormCancel}>
+          <Text style={styles.bottonFormCancelTitle}>Cancelar</Text>
+        </TouchableHighlight>
+    </View>
+  )
 }
 
 export default Form;
