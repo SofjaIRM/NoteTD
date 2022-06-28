@@ -51,13 +51,14 @@ const styles = StyleSheet.create({
 
 	textFormTitle:{
 		fontSize: 16,
+    fontWeight: 'bold',
 		textAlign: 'center',
 		paddingTop: 5,
 		paddingBottom: 5,
 		marginTop: 20,
 		marginBottom: 10,
-		backgroundColor: '#880010',
-		color: '#ffffff',
+		//backgroundColor: '#880010',
+		color: '#000',
 	},
 
 //FORM BOTTONS
@@ -116,7 +117,7 @@ const styles = StyleSheet.create({
 
 //FORM INPUT
 	input: {
-		fontSize: 16,	
+		fontSize: 16,
 		borderWidth: 0.5,
 		borderColor: '#a7a7a7',
 		paddingLeft: 10,
@@ -170,7 +171,7 @@ const styles = StyleSheet.create({
 	taskDate:{
 		fontSize: 14,
 	},
-	
+
 	taskMenu:{
 		paddingLeft: 10,
 		paddingRight: 10,
@@ -181,7 +182,7 @@ const styles = StyleSheet.create({
 	taskNotDone: {
 		backgroundColor: '#eeeeee'
 	},
-	
+
 	taskDone:{
 		backgroundColor: '#f49c88'
 	},
