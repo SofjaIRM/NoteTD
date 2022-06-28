@@ -7,14 +7,14 @@ import DotMenu from './DotMenu';
 
 function Task({ tarefa, onRemove, onEdit}) {
   const [tarefasCheck, setTarefasCheck] = useState(false);
-  const [dotMenu, setDotMenu] = useState(false);
+  const [showDotMenu, setShowDotMenu] = useState(false);
 
   const handleToggleDone = () => {
 		setTarefasCheck(!tarefasCheck);
   }
 
   const handleDotMenu = () => {
-    setDotMenu(!dotMenu);
+    setShowDotMenu(!showDotMenu);
   }
 
   const { text, date, currentColor: color } = tarefa;
@@ -38,12 +38,8 @@ function Task({ tarefa, onRemove, onEdit}) {
               <Icon name="ellipsis-v" style={styles.taskMenu}/>
             </TouchableWithoutFeedback>
           </View>
-
           {
-            (dotMenu == true)
-            ? <DotMenu onTaskRemove={onRemove}
-                      onTaskEdit={onEdit}/>
-            : <Text style={{position: 'absolute'}}/>
+            showDotMenu && <DotMenu onTaskRemove={onRemove} onTaskEdit={onEdit}/>
           }
         </View>
   )

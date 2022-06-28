@@ -207,22 +207,7 @@ const styles = StyleSheet.create({
 		position: 'absolute',
 		right: 25,
 		bottom: 2,
-		backgroundColor: '#9b9b9b',
 		zIndex: 5,
-	},
-	dotMenuButton:{
-		flexDirection: 'row',
-		alignItems: 'center',
-		paddingTop: 5,
-		paddingBottom: 5,
-		paddingRight: 10,
-		paddingLeft: 10,
-	},
-	dotMenuButtonIcon:{
-		paddingRight: 5,
-		fontSize: 15,
-		color: '#313131',
-		alignItems: 'baseline',
 	},
 });
 

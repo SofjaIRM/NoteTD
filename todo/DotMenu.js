@@ -1,33 +1,45 @@
 import React from 'react'
-import { 
-  View, 
+import {
+  View,
   Text,
   TouchableHighlight,
 } from 'react-native'
 import styles from '../css/styles'
 import Icon from 'react-native-vector-icons/FontAwesome';
 
-class DotMenu extends React.Component {
+function DotMenu({ onTaskEdit, onTaskRemove }){
 
-   render () {
-      return (
-         <View style={styles.dotMenu}>
-            <TouchableHighlight onPress = {this.props.onTaskEdit}>
-               <View style={styles.dotMenuButton}>
-                  <Icon name="edit" style={styles.dotMenuButtonIcon}/>
-                  <Text style={{color: '#313131'}}>{'Editar tarefa'.toUpperCase()}</Text>
-               </View>
-            </TouchableHighlight>
+  const renderButton = (callback, type) => {
+    const title = {
+      edit: 'editar tarefa',
+      remove: 'remover tarefa'
+    };
 
-            <TouchableHighlight onPress = {this.props.onTaskRemove}>
-               <View style={styles.dotMenuButton}>
-                  <Icon name="trash" style={styles.dotMenuButtonIcon}/>
-                  <Text style={{color: '#313131'}}>{'Remover Tarefa'.toUpperCase()}</Text>
-               </View>
-            </TouchableHighlight>
-         </View>
-      )
-    }
+    const invalidType = !Object.keys(title).includes(type);
+
+    if (invalidType) return;
+
+    return (
+      <TouchableHighlight onPress={callback}>
+        <View>
+          <Icon.Button
+            name="edit"
+            backgroundColor="#de1f46"
+            borderRadius={0}
+          >
+            {title[type].toUpperCase()}
+          </Icon.Button>
+        </View>
+      </TouchableHighlight>
+    )
+  };
+
+  return (
+     <View style={styles.dotMenu}>
+       {renderButton(onTaskEdit, 'edit')}
+       {renderButton(onTaskRemove, 'remove')}
+     </View>
+  )
 }
 
 export default DotMenu
