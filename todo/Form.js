@@ -20,36 +20,27 @@ function Form({
 }) {
   const [tarefas, setTarefas] = useState([]);
   const [text, setText] = useState('');
-  const [date, setDate] = useState(null);
+  const [date, setDate] = useState('');
   const [done, setDone] = useState(false);
   const [currentColor, setCurrentColor] = useState(color);
   const [isEditing, setIsEditing] = useState(false);
   const [currentTarefa, setCurrentTarefa] = useState(tarefa);
   const [showDatePicker, setShowDatePicker] = useState(false);
 
-
-  useEffect(() => {
-    if(indexEditing !== -1) {
-      setIsEditing(true);
-    }
-  }, [indexEditing]);
-
   const handleInputChange = (tarefaIndex, key, value) => {
     let tarefa = Object.assign({}, currentTarefa);
-    console.log(tarefa);
     //tarefa[tarefaIndex][key] = value;
     setCurrentTarefa(tarefa);
   }
 
   const handleDateChange = (e, date) => {
-    console.log(e);
-    setDate(date);
+    setDate(date.toString());
     setShowDatePicker(false);
   };
 
   const handleSubmitForm = () => {
     if (text){
-      let tarefas = {
+      const tarefa = {
         text,
         date,
         done,
@@ -61,7 +52,7 @@ function Form({
         done: false,
         color: ''
       })
-      !onPress || onPress(tarefas)
+      onPress(tarefa)
 
     }
 
@@ -74,7 +65,7 @@ function Form({
   }
 
 
-  const handleSubmit = () => {
+  const handleSubmit = (e) => {
     let tarefa = Object.assign({}, currentTarefa);
     return !onUpdate || onUpdate(isEditing, tarefa);
   }
@@ -89,11 +80,7 @@ function Form({
         <Text style={styles.textFormTitle}>{'Tarefa'.toUpperCase()}</Text>
         <TextInput
           style = {[styles.input, { backgroundColor: changeColor() }]}
-          onChangeText = {
-            isEditingTask
-            ? (text) => setText(text)
-            : () => handleInputChange(indexEditing, 'text')
-          }
+          onChangeText = {setText}
           value = {text}
           placeholderTextColor = '#c5c5c9'
           placeholder = "Insira uma nova tarefa"
@@ -106,7 +93,7 @@ function Form({
             showDatePicker &&
             <DateTimePicker
               mode="date"
-              value={date || new Date()}
+              value={date ? new Date(date) : new Date()}
               style={{flex:1}}
               minimumDate={new Date()}
               onChange={handleDateChange}
@@ -115,7 +102,7 @@ function Form({
           }
           <TextInput
             style={styles.input}
-            value={date ? date.toISOString().slice(0, 10).toString() : ''}
+            value={date}
             onPressIn={()=> setShowDatePicker(true)}
             textAlign='center'
             caretHidden={true}
@@ -155,19 +142,15 @@ function Form({
           </TouchableHighlight>
         </View>
         <TouchableHighlight
-          onPress = {
-            isEditingTask
-            ? (value) => handleSubmitForm(value)
-            : handleSubmit
-          }
+          onPress = {handleSubmitForm}
           style={styles.bottonForm}
           value={tarefas}
         >
           <Text style={styles.bottonFormTitle}>
             {
-              isEditingTask
+              !isEditingTask
               ?'Adicionar tarefa'.toUpperCase()
-              :'Guardar'.toUpperCase()
+              :'Atualizar tarefa'.toUpperCase()
             }
           </Text>
         </TouchableHighlight>

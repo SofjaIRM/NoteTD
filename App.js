@@ -17,15 +17,20 @@ function App() {
   const [color, setColor] = useState('');
   const [indexEditing, setIndexEditing] = useState(-1);
 
-  const handleAddListItem = (tarefa) => {
+  const handleAddListItem = (task) => {
     const currentListaTarefas = listaTarefas.slice();
-    currentListaTarefas.push(tarefa);
+    currentListaTarefas.push(task);
     setListaTarefas(currentListaTarefas);
     setToggleShowForm(false);
     setColor('');
   }
 
   const handleUpdateListItem = (index, listaTarefas) => {
+    if(!listaTarefas.length) {
+      setToggleShowForm(false);
+      return;
+    };
+
     let tarefas = listaTarefas.slice();
     tarefas[index] = listaTarefas;
     setListaTarefas(tarefas);
@@ -39,11 +44,12 @@ function App() {
     setListaTarefas(currentListaTarefas);
   }
 
+  /*
   const handleSomeEditing = (index) => {
     setIndexEditing(index);
     handleToggleForm();
   }
-
+  */
   const renderMappingTasks = () => {
     return listaTarefas.map((task, index) => renderTasks(task, index));
   }
@@ -79,7 +85,10 @@ function App() {
       <View>
         <List
               toggleShowForm = {handleToggleForm}
-              mappingTasks = {renderMappingTasks}
+              listaTarefas={listaTarefas}
+              handleToggleForm={handleToggleForm}
+              setIndexEditing={setIndexEditing}
+              handleRemoveTask={handleRemoveTask}
         />
       </View>
         {

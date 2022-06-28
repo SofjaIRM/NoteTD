@@ -5,14 +5,9 @@ import styles from '../css/styles';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import DotMenu from './DotMenu';
 
-function Task({ tarefa, onRemove, onEdit, isEditing, handleSubmit }) {
+function Task({ tarefa, onRemove, onEdit}) {
   const [tarefasCheck, setTarefasCheck] = useState(false);
-  const [currentTarefa, setCurrentTarefa] = useState(tarefa);
   const [dotMenu, setDotMenu] = useState(false);
-
-  useEffect(() => {
-    setCurrentTarefa(tarefa);
-  }, [tarefa]);
 
   const handleToggleDone = () => {
 		setTarefasCheck(!tarefasCheck);
@@ -22,7 +17,7 @@ function Task({ tarefa, onRemove, onEdit, isEditing, handleSubmit }) {
     setDotMenu(!dotMenu);
   }
 
-  const { text, date, currentColor: color } = currentTarefa;
+  const { text, date, currentColor: color } = tarefa;
   return (
         <View>
           <View style={[styles.wrapperTasks, {backgroundColor: (color == '') ? '#eeeeee' : color}]}>
