@@ -94,8 +94,8 @@ function App() {
         {
         !listaTarefas.length
         ?
-          <View>
-            <Text style={{textAlign: 'center', fontSize: 18, color: '#ffffff'}}>
+          <View style={{alignItems: 'center'}}>
+            <Text style={{textAlign: 'center', fontSize: 18, color: '#ffffff', width: 250, marginTop: 40}}>
             Não tens nenhuma tarefa. Queres começar a adicionar tarefas?
             </Text>
           </View>
@@ -103,19 +103,20 @@ function App() {
           <View style={{display: 'none'}}/>
         }
       <TouchableHighlight
-        style={
+        style={[
+          styles.addTaskButtonView,
           !listaTarefas.length
-          ? styles.bottonShowFormEmpty
-          : styles.bottonShowForm
+            ? { marginBottom: 120 }
+            : { marginLeft: 'auto' }]
         }
         onPress = {handleToggleForm}
         value={toggleShowForm}>
-        <View style={
-          !listaTarefas.length
-          ? {flexDirection: 'column', alignItems: 'center', padding: 5}
-          : {flexDirection: 'row', alignItems: 'center'}
-          } >
-          <Icon name="plus" style={styles.addFirstTaskIcon}/>
+        <View>
+          {
+            !listaTarefas.length
+            ? <Text style={styles.addFistTaskText}>Adicionar tarefa</Text>
+            : <Icon name="plus" style={styles.addFirstTaskIcon}/>
+          }
         </View>
       </TouchableHighlight>
     </View>

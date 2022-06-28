@@ -9,11 +9,11 @@ const styles = StyleSheet.create({
 //APP
 	wrapperApp: {
 		flex:1,
-		paddingTop: 25,
+		paddingTop: 70,
 	},
 	wrapperAppBlack:{
 		flex: 1,
-		paddingTop: 25,
+		paddingTop: 70,
 		backgroundColor: '#000000'
 	},
 
@@ -25,11 +25,38 @@ const styles = StyleSheet.create({
 		fontSize: 24,
 	},
 
+  addTaskButtonView: {
+    flexDirection: 'column',
+    marginTop: 'auto',
+    alignItems: 'center',
+  },
+
+  addFistTaskText: {
+    padding: 10,
+    width: 220,
+    textAlign: 'center',
+    fontSize: 20,
+    color: '#fff',
+    borderRadius: 10,
+    backgroundColor: '#de1f46',
+    borderLeftWidth: 1,
+    borderRightWidth: 1,
+    borderBottomWidth: 2,
+    borderLeftColor: '#a6a6a6',
+    borderRightColor: '#a6a6a6',
+    borderBottomColor: '#727272',
+  },
+
 	addFirstTaskIcon:{
-		paddingRight: 5,
+		padding: 20,
+    paddingLeft: 23,
+    paddingRight: 23,
 		fontSize: 20,
-		color: '#313131',
-		alignItems: 'baseline',
+		color: '#fff',
+    borderRadius: 50,
+    backgroundColor: '#de1f46',
+		marginRight: 40,
+    marginBottom: 40
 	},
 
 //FORM
@@ -102,20 +129,6 @@ const styles = StyleSheet.create({
     color: '#fff',
 		paddingTop: 9,
 		paddingBottom: 9,
-	},
-	buttonShowForm:{
-		marginTop: 'auto',
-		backgroundColor: '#489baa',
-	},
-	buttonShowFormEmpty:{
-		backgroundColor: '#489baa',
-		width: '60%',
-		borderLeftWidth: 1,
-		borderRightWidth: 1,
-		borderBottomWidth: 2,
-		borderLeftColor: '#a6a6a6',
-		borderRightColor: '#a6a6a6',
-		borderBottomColor: '#727272',
 	},
 
 //FORM INPUT
