@@ -29,7 +29,7 @@ function Form({
   useEffect(() => {
     setIsEditing(indexEditing);
     setCurrentTarefa(tarefa);
-  });
+  }, [indexEditing, tarefa]);
 
   const handleInputChange = (tarefaIndex, key, value) => {
     let tarefa = Object.assign({}, currentTarefa);

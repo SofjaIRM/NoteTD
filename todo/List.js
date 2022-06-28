@@ -1,22 +1,12 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { View } from 'react-native'
 
-class List extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-        tarefasCheck: this.props.listaTarefas,
-    }
-  }
-
-  render () {
-
-    return (
-      <View>
-        { !this.props.mappingTasks || this.props.mappingTasks() }
-      </View>
-      )
-    }
+function List({ listaTarefas, mappingTasks }) {
+  return (
+    <View>
+      { !mappingTasks || mappingTasks(listaTarefas) }
+    </View>
+    )
 }
 
 export default List

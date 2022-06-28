@@ -1,99 +1,57 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import CheckBox from 'expo-checkbox';
 import { View, Text, TouchableWithoutFeedback } from 'react-native';
 import styles from '../css/styles';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import DotMenu from './DotMenu';
 
-class List extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-        tarefasCheck: false,
-        tarefa: this.props.tarefa,
-        dotMenu: false,
-        editing: false,
-        hideText: true,
-    }
+function Task({ tarefa, onRemove, onEdit, isEditing, handleSubmit }) {
+  const [tarefasCheck, setTarefasCheck] = useState(false);
+  const [currentTarefa, setCurrentTarefa] = useState(tarefa);
+  const [dotMenu, setDotMenu] = useState(false);
 
-    this.handleEdit = this.handleEdit.bind(this)
-    this.handleToggleDone = this.handleToggleDone.bind(this)
-    this.handleDotMenu = this.handleDotMenu.bind(this)
-    this.handleToggleDateInput = this.handleToggleDateInput.bind(this)
+  useEffect(() => {
+    setCurrentTarefa(tarefa);
+  }, [tarefa]);
+
+  const handleToggleDone = () => {
+		setTarefasCheck(!tarefasCheck);
   }
 
-  componentWillReceiveProps(newProps){
-    this.setState({tarefa: newProps.tarefa})
+  const handleDotMenu = () => {
+    setDotMenu(!dotMenu);
   }
 
-  handleToggleDone(){
-		this.setState({
-			tarefasCheck: !this.state.tarefasCheck
-		})
-  }
-
-  handleDotMenu(){
-    this.setState({
-      dotMenu: !this.state.dotMenu
-    })
-  }
-
-  handleEdit () {
-    if(this.props.isEditing) {
-        this.handleSubmit ()
-    }
-    else {
-        !this.props.onEditing || this.props.onEditing(this)
-
-    }
-  }
-
-  handleToggleDateInput(date){
-    if(date !== ''){
-      let tarefa = Object.assign({}, this.state.tarefa)
-      tarefa.date = ''
-      this.setState({
-        tarefa,
-        hideText: true
-      })
-    }
-  }
-
-  render () {
-    const {text, date, currentColor: color} = this.state.tarefa
-    return (
-          <View>
-            <View style={[styles.wrapperTasks, {backgroundColor: (color == '') ? '#eeeeee' : color}]}>
-
-              <View>
-                <CheckBox
-                  disabled={false}
-                  value = {this.state.tarefasCheck}
-                  onValueChange = {this.handleToggleDone}
-                />
-              </View>
-
-              <View style={styles.wrapperTextAndDate}>
-                <View>
-                  <Text style={styles.taskText}>{text}</Text>
-                  <Text style={[styles.taskDate, {color: (color == '') ? '#1b7070' : '#ffffff'}]}>{date}</Text>
-                </View>
-              </View>
-
-              <TouchableWithoutFeedback onPress = {this.handleDotMenu}>
-                <Icon name="ellipsis-v" style={styles.taskMenu}/>
-              </TouchableWithoutFeedback>
+  const { text, date, currentColor: color } = currentTarefa;
+  return (
+        <View>
+          <View style={[styles.wrapperTasks, {backgroundColor: (color == '') ? '#eeeeee' : color}]}>
+            <View>
+              <CheckBox
+                disabled={false}
+                value = {tarefasCheck}
+                onValueChange = {handleToggleDone}
+              />
             </View>
-
-            {
-              (this.state.dotMenu == true)
-              ? <DotMenu onTaskRemove={this.props.onRemove}
-                        onTaskEdit={this.props.onEditing}/>
-              : <Text style={{position: 'absolute'}}/>
-            }
+            <View style={styles.wrapperTextAndDate}>
+              <View>
+                <Text style={styles.taskText}>{text}</Text>
+                <Text style={[styles.taskDate, {color: (color == '') ? '#1b7070' : '#ffffff'}]}>{date}</Text>
+              </View>
+            </View>
+            <TouchableWithoutFeedback onPress = {handleDotMenu}>
+              <Icon name="ellipsis-v" style={styles.taskMenu}/>
+            </TouchableWithoutFeedback>
           </View>
-    )
-  }
+
+          {
+            (dotMenu == true)
+            ? <DotMenu onTaskRemove={onRemove}
+                      onTaskEdit={onEdit}/>
+            : <Text style={{position: 'absolute'}}/>
+          }
+        </View>
+  )
 }
 
-export default List
+export default Task;
