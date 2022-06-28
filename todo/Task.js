@@ -21,7 +21,7 @@ function Task({ tarefa, onRemove, onEdit}) {
   return (
         <View>
           <View style={[styles.wrapperTasks, {backgroundColor: (color == '') ? '#eeeeee' : color}]}>
-            <View>
+            <View style={{ paddingLeft: 10, paddingRight: 10}}>
               <CheckBox
                 disabled={false}
                 value = {tarefasCheck}
