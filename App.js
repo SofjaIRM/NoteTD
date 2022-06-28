@@ -80,7 +80,10 @@ function App() {
     ?
     <View style={!listaTarefas.length ? styles.wrapperAppBlack: styles.wrapperApp}>
       <View style={styles.wrapperTitle}>
-        <Image source={require('./img/logo.png')} />
+        { !listaTarefas.length
+          ? <Image source={require('./img/logo.png')} />
+          : <Text style={{fontSize: 20, fontWeight: 'bold', marginBottom: 15}}>NoteTD</Text>
+        }
       </View>
       <View>
         <List
