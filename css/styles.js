@@ -61,15 +61,20 @@ const styles = StyleSheet.create({
 		color: '#000',
 	},
 
-//FORM BOTTONS
-	bottonForm: {
+//FORM BUTTONS
+  buttonView: {
+    display: 'flex',
+    flexDirection: 'row',
+    marginTop: 'auto'
+  },
+	buttonForm: {
 		backgroundColor: '#489baa',
 		alignItems: 'center',
 		marginTop: 'auto',
 		marginLeft: 'auto',
 		marginRight: 'auto',
 		borderRadius: 4,
-		width: 180,
+		width: 140,
 		borderLeftWidth: 1,
 		borderRightWidth: 1,
 		borderBottomWidth: 2,
@@ -77,14 +82,14 @@ const styles = StyleSheet.create({
 		borderRightColor: '#a6a6a6',
 		borderBottomColor: '#727272',
 	},
-	bottonFormCancel: {
+	buttonFormCancel: {
 		backgroundColor: '#f7375e',
 		alignItems: 'center',
 		marginTop: 'auto',
 		marginLeft: 'auto',
 		marginRight: 'auto',
 		borderRadius: 4,
-		width: 180,
+		width: 140,
 		borderLeftWidth: 1,
 		borderRightWidth: 1,
 		borderBottomWidth: 2,
@@ -92,19 +97,17 @@ const styles = StyleSheet.create({
 		borderRightColor: '#a6a6a6',
 		borderBottomColor: '#727272',
 	},
-	bottonFormTitle: {
+	buttonFormTitle: {
+    textTransform: 'uppercase',
+    color: '#fff',
 		paddingTop: 9,
 		paddingBottom: 9,
 	},
-	bottonFormCancelTitle: {
-		paddingTop: 9,
-		paddingBottom: 9,
-	},
-	bottonShowForm:{
+	buttonShowForm:{
 		marginTop: 'auto',
 		backgroundColor: '#489baa',
 	},
-	bottonShowFormEmpty:{
+	buttonShowFormEmpty:{
 		backgroundColor: '#489baa',
 		width: '60%',
 		borderLeftWidth: 1,

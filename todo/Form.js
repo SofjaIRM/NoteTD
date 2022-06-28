@@ -141,25 +141,25 @@ function Form({
               <Text style={styles.textPriority}>Baixa</Text>
           </TouchableHighlight>
         </View>
-        <TouchableHighlight
-          onPress = {handleSubmitForm}
-          style={styles.bottonForm}
-          value={tarefas}
-        >
-          <Text style={styles.bottonFormTitle}>
-            {
-              !isEditingTask
-              ?'Adicionar tarefa'.toUpperCase()
-              :'Atualizar tarefa'.toUpperCase()
-            }
-          </Text>
-        </TouchableHighlight>
+        <View style={styles.buttonView}>
+          <TouchableHighlight
+            onPress = {handleSubmitForm}
+            style={styles.buttonForm}
+            value={tarefas}
+          >
+            <Text style={styles.buttonFormTitle}>
+              Guardar
+            </Text>
+          </TouchableHighlight>
 
-        <TouchableHighlight
-          onPress = {cancelAddList}
-          style={styles.bottonFormCancel}>
-          <Text style={styles.bottonFormCancelTitle}>Cancelar</Text>
-        </TouchableHighlight>
+          <TouchableHighlight
+            onPress = {cancelAddList}
+            style={styles.buttonFormCancel}>
+            <Text style={styles.buttonFormTitle}>
+              Cancelar
+            </Text>
+          </TouchableHighlight>
+        </View>
     </View>
   )
 }
