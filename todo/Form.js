@@ -8,6 +8,7 @@ import {
 } from 'react-native';
 import styles from '../css/styles';
 import DateTimePicker from '@react-native-community/datetimepicker';
+import PriorityButton from './PriorityButton';
 
 function Form({
   index,
@@ -84,26 +85,13 @@ function Form({
           />
         </View>
         <View>
-          <Text style={styles.textFormTitle}>{'Prioridade'.toUpperCase()}</Text>
-          <TouchableHighlight
-            style={[{backgroundColor: '#f54949'}, styles.buttonPriority]}
-            onPress = {() => setColor('#f54949')}>
-            <Text style={styles.textPriority}>Alta</Text>
-          </TouchableHighlight>
-          <TouchableHighlight
-            style={[{backgroundColor: '#edc53a'}, styles.buttonPriority]}
-            onPress = {() => setColor('#edc53a')}>
-            <Text style={styles.textPriority}>Media</Text>
-          </TouchableHighlight>
-          <TouchableHighlight
-            style={[{backgroundColor: '#c7e952'}, styles.buttonPriority]}
-            onPress = {() => setColor('#c7e952')}>
-              <Text style={styles.textPriority}>Baixa</Text>
-          </TouchableHighlight>
+          <PriorityButton priorityLevel="alta" setColor={setColor} />
+          <PriorityButton priorityLevel="media" setColor={setColor}/>
+          <PriorityButton priorityLevel="baixa" setColor={setColor}/>
         </View>
         <View style={styles.buttonView}>
           <TouchableHighlight
-            onPress = {handleSubmitForm}
+            onPress={handleSubmitForm}
             style={styles.buttonForm}
             value={tarefa}
           >
@@ -113,7 +101,7 @@ function Form({
           </TouchableHighlight>
 
           <TouchableHighlight
-            onPress = {cancelAddTask}
+            onPress={cancelAddTask}
             style={styles.buttonFormCancel}>
             <Text style={styles.buttonFormTitle}>
               Cancelar
