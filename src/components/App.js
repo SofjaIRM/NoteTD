@@ -1,14 +1,10 @@
 import React, { useState } from 'react';
-import {
-  Text,
-  View,
-  TouchableHighlight,
-  Image,
-} from 'react-native';
-import styles from './css/styles'
-import Form from './todo/Form'
-import List from './todo/List'
+import { Text, View, TouchableHighlight } from 'react-native';
+import Form from './Form/Form';
+import List from './List/List';
+import Logo from './Logo/Logo';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import styles from './styles';
 
 function App() {
   const [listaTarefas, setListaTarefas] = useState([]);
@@ -54,7 +50,7 @@ function App() {
     <View style={!listaTarefas.length ? styles.wrapperAppBlack: styles.wrapperApp}>
       <View style={styles.wrapperTitle}>
         { !listaTarefas.length
-          ? <Image source={require('./img/logo.png')} />
+          ? <Logo/>
           : <Text style={{fontSize: 20, fontWeight: 'bold', marginBottom: 15}}>NoteTD</Text>
         }
       </View>
