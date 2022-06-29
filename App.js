@@ -8,71 +8,44 @@ import {
 import styles from './css/styles'
 import Form from './todo/Form'
 import List from './todo/List'
-import Task from './todo/Task'
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 function App() {
   const [listaTarefas, setListaTarefas] = useState([]);
   const [toggleShowForm, setToggleShowForm] = useState(false);
-  const [color, setColor] = useState('');
-  const [indexEditing, setIndexEditing] = useState(-1);
+  const [index, setIndex] = useState(-1);
 
-  const handleAddListItem = (task) => {
+  const handleAddListItem = (task, index) => {
     const currentListaTarefas = listaTarefas.slice();
-    currentListaTarefas.push(task);
+    if (index !== -1) {
+      currentListaTarefas[index] = task;
+    }
+    else {
+      currentListaTarefas.push(task);
+    }
     setListaTarefas(currentListaTarefas);
     setToggleShowForm(false);
-    setColor('');
+    setIndex(-1);
   }
 
-  const handleUpdateListItem = (index, listaTarefas) => {
-    if(!listaTarefas.length) {
-      setToggleShowForm(false);
-      return;
-    };
-
-    let tarefas = listaTarefas.slice();
-    tarefas[index] = listaTarefas;
-    setListaTarefas(tarefas);
-    setToggleShowForm(false);
-    setIndexEditing(-1);
+  const handleEditTask = (index) => {
+    console.log('edite task', index);
+    setIndex(index);
+    setToggleShowForm(true);
   }
 
   const handleRemoveTask = (index) => {
-    let currentListaTarefas = listaTarefas.slice();
-    currentListaTarefas.splice(index, 1);
-    setListaTarefas(currentListaTarefas);
+    console.log('remove', index);
+    if(index !== -1) {
+      let currentListaTarefas = listaTarefas.slice();
+      currentListaTarefas.splice(index, 1);
+      setListaTarefas(currentListaTarefas);
+    }
   }
-
-  /*
-  const handleSomeEditing = (index) => {
-    setIndexEditing(index);
-    handleToggleForm();
-  }
-  */
-  const renderMappingTasks = () => {
-    return listaTarefas.map((task, index) => renderTasks(task, index));
-  }
-
-  const renderTasks = (item, index) => {
-    return (
-      <Task
-        key={'item' + index}
-        tarefa={item}
-        isEditing={index === indexEditing}
-        onEdit={handleSomeEditing(index)}
-        onRemove={handleRemoveTask(index)}
-      />
-    )
-  }
-
-  const handleToggleForm = () => setToggleShowForm(true);
-
-  const handleChangePriority = (newColor) => setColor(newColor);
 
   const handleCancelAddList = () => {
     setToggleShowForm(false);
-    setIndexEditing(-1);
+    setIndex(-1);
   }
 
   return (
@@ -87,11 +60,9 @@ function App() {
       </View>
       <View>
         <List
-              toggleShowForm = {handleToggleForm}
-              listaTarefas={listaTarefas}
-              handleToggleForm={handleToggleForm}
-              setIndexEditing={setIndexEditing}
-              handleRemoveTask={handleRemoveTask}
+          listaTarefas={listaTarefas}
+          handleEditTask={handleEditTask}
+          handleRemoveTask={handleRemoveTask}
         />
       </View>
         {
@@ -112,7 +83,7 @@ function App() {
             ? { marginBottom: 120 }
             : { marginLeft: 'auto' }]
         }
-        onPress = {handleToggleForm}
+        onPress = {() => setToggleShowForm(true)}
         value={toggleShowForm}>
         <View>
           {
@@ -126,13 +97,10 @@ function App() {
     :
     <View style={styles.wrapperApp}>
           <Form
-            onPress={handleAddListItem}
-            indexEditing={indexEditing}
-            cancelAddList={handleCancelAddList}
-            changePriority={handleChangePriority}
-            onUpdate={handleUpdateListItem}
-            color={color}
-            tarefa = {listaTarefas}
+            index={index}
+            handleAddTask={handleAddListItem}
+            cancelAddTask={handleCancelAddList}
+            tarefa={listaTarefas[index]}
           />
     </View>
   );

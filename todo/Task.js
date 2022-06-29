@@ -5,7 +5,7 @@ import styles from '../css/styles';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import DotMenu from './DotMenu';
 
-function Task({ tarefa, onRemove, onEdit}) {
+function Task({ index, tarefa, onRemoveTask, onEditTask }) {
   const [tarefasCheck, setTarefasCheck] = useState(false);
   const [showDotMenu, setShowDotMenu] = useState(false);
 
@@ -17,7 +17,7 @@ function Task({ tarefa, onRemove, onEdit}) {
     setShowDotMenu(!showDotMenu);
   }
 
-  const { text, date, currentColor: color } = tarefa;
+  const { text, date, color} = tarefa;
   return (
         <View>
           <View style={[styles.wrapperTasks, {backgroundColor: (color == '') ? '#eeeeee' : color}]}>
@@ -31,7 +31,7 @@ function Task({ tarefa, onRemove, onEdit}) {
             <View style={styles.wrapperTextAndDate}>
               <View>
                 <Text style={styles.taskText}>{text}</Text>
-                <Text style={[styles.taskDate, {color: (color == '') ? '#1b7070' : '#ffffff'}]}>{date}</Text>
+                <Text style={[styles.taskDate, {color: (color == '') ? '#1b7070' : '#ffffff'}]}>{date && new Date(date).toISOString().slice(0, 10)}</Text>
               </View>
             </View>
             <TouchableWithoutFeedback onPress = {handleDotMenu}>
@@ -39,7 +39,7 @@ function Task({ tarefa, onRemove, onEdit}) {
             </TouchableWithoutFeedback>
           </View>
           {
-            showDotMenu && <DotMenu onTaskRemove={onRemove} onTaskEdit={onEdit}/>
+            showDotMenu && <DotMenu index={index} onRemoveTask={onRemoveTask} onEditTask={onEditTask}/>
           }
         </View>
   )

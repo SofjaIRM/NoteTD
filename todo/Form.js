@@ -10,28 +10,15 @@ import styles from '../css/styles';
 import DateTimePicker from '@react-native-community/datetimepicker';
 
 function Form({
-  color,
+  index,
   tarefa,
-  indexEditing,
-  onPress,
-  onUpdate,
-  changePriority,
-  cancelAddList
+  handleAddTask,
+  cancelAddTask,
 }) {
-  const [tarefas, setTarefas] = useState([]);
-  const [text, setText] = useState('');
-  const [date, setDate] = useState('');
-  const [done, setDone] = useState(false);
-  const [currentColor, setCurrentColor] = useState(color);
-  const [isEditing, setIsEditing] = useState(false);
-  const [currentTarefa, setCurrentTarefa] = useState(tarefa);
+  const [text, setText] = useState(tarefa?.text || '');
+  const [date, setDate] = useState(tarefa?.date || '');
+  const [color, setColor] = useState(tarefa?.color || '#fff');
   const [showDatePicker, setShowDatePicker] = useState(false);
-
-  const handleInputChange = (tarefaIndex, key, value) => {
-    let tarefa = Object.assign({}, currentTarefa);
-    //tarefa[tarefaIndex][key] = value;
-    setCurrentTarefa(tarefa);
-  }
 
   const handleDateChange = (e, date) => {
     setDate(date.toString());
@@ -43,17 +30,10 @@ function Form({
       const tarefa = {
         text,
         date,
-        done,
-        currentColor,
-      }
-      setCurrentTarefa({
-        text: '',
-        date: '',
         done: false,
-        color: ''
-      })
-      onPress(tarefa)
-
+        color: color !== '#fff' ? color :'#eeeeee',
+      }
+      handleAddTask(tarefa, index)
     }
 
     else{
@@ -64,22 +44,14 @@ function Form({
     }
   }
 
-
-  const handleSubmit = (e) => {
-    let tarefa = Object.assign({}, currentTarefa);
-    return !onUpdate || onUpdate(isEditing, tarefa);
-  }
-
-  const changeColor = () => currentColor === '' ? '#ffffff' : currentColor;
-
-  const isEditingTask = isEditing === indexEditing;
+  const changeColor = () => (tarefa?.color) ? tarefa.color : '#fff';
 
   return (
     <View style={styles.wrapperForm}>
       <View style={styles.wrapperTextInput}>
         <Text style={styles.textFormTitle}>{'Tarefa'.toUpperCase()}</Text>
         <TextInput
-          style = {[styles.input, { backgroundColor: changeColor() }]}
+          style = {[styles.input, { backgroundColor: color }]}
           onChangeText = {setText}
           value = {text}
           placeholderTextColor = '#c5c5c9'
@@ -93,7 +65,7 @@ function Form({
             showDatePicker &&
             <DateTimePicker
               mode="date"
-              value={date ? new Date(date) : new Date()}
+              value={tarefa?.date ? new Date(tarefa.date) : new Date()}
               style={{flex:1}}
               minimumDate={new Date()}
               onChange={handleDateChange}
@@ -102,7 +74,7 @@ function Form({
           }
           <TextInput
             style={styles.input}
-            value={date}
+            value={date && new Date(date).toISOString().slice(0, 10)}
             onPressIn={()=> setShowDatePicker(true)}
             textAlign='center'
             caretHidden={true}
@@ -115,29 +87,17 @@ function Form({
           <Text style={styles.textFormTitle}>{'Prioridade'.toUpperCase()}</Text>
           <TouchableHighlight
             style={[{backgroundColor: '#f54949'}, styles.buttonPriority]}
-            onPress = {
-              isEditingTask
-              ? () => changePriority('#f54949')
-              : () => handleInputChange(indexEditing, 'color', '#f54949')
-            }>
+            onPress = {() => setColor('#f54949')}>
             <Text style={styles.textPriority}>Alta</Text>
           </TouchableHighlight>
           <TouchableHighlight
             style={[{backgroundColor: '#edc53a'}, styles.buttonPriority]}
-            onPress = {
-              isEditingTask
-              ? () => changePriority('#edc53a')
-              : () => handleInputChange(indexEditing, 'color', '#edc53a')
-            }>
+            onPress = {() => setColor('#edc53a')}>
             <Text style={styles.textPriority}>Media</Text>
           </TouchableHighlight>
           <TouchableHighlight
             style={[{backgroundColor: '#c7e952'}, styles.buttonPriority]}
-            onPress = {
-              isEditingTask
-              ? () => changePriority('#c7e952')
-              : () => handleInputChange(indexEditing, 'color', '#c7e952')
-            }>
+            onPress = {() => setColor('#c7e952')}>
               <Text style={styles.textPriority}>Baixa</Text>
           </TouchableHighlight>
         </View>
@@ -145,7 +105,7 @@ function Form({
           <TouchableHighlight
             onPress = {handleSubmitForm}
             style={styles.buttonForm}
-            value={tarefas}
+            value={tarefa}
           >
             <Text style={styles.buttonFormTitle}>
               Guardar
@@ -153,7 +113,7 @@ function Form({
           </TouchableHighlight>
 
           <TouchableHighlight
-            onPress = {cancelAddList}
+            onPress = {cancelAddTask}
             style={styles.buttonFormCancel}>
             <Text style={styles.buttonFormTitle}>
               Cancelar

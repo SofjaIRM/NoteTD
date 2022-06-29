@@ -1,14 +1,9 @@
 import React from 'react'
-import {
-  View,
-  Text,
-  TouchableHighlight,
-} from 'react-native'
+import { View } from 'react-native'
 import styles from '../css/styles'
 import Icon from 'react-native-vector-icons/FontAwesome';
 
-function DotMenu({ onTaskEdit, onTaskRemove }){
-
+function DotMenu({ index, onEditTask, onRemoveTask }){
   const renderButton = (callback, type) => {
     const title = {
       edit: 'editar tarefa',
@@ -20,24 +15,21 @@ function DotMenu({ onTaskEdit, onTaskRemove }){
     if (invalidType) return;
 
     return (
-      <TouchableHighlight onPress={callback}>
-        <View>
-          <Icon.Button
-            name="edit"
-            backgroundColor="#de1f46"
-            borderRadius={0}
-          >
-            {title[type].toUpperCase()}
-          </Icon.Button>
-        </View>
-      </TouchableHighlight>
+      <Icon.Button
+        name={type}
+        backgroundColor="#de1f46"
+        borderRadius={0}
+        onPress={() => callback(index)}
+      >
+        {title[type].toUpperCase()}
+      </Icon.Button>
     )
   };
 
   return (
      <View style={styles.dotMenu}>
-       {renderButton(onTaskEdit, 'edit')}
-       {renderButton(onTaskRemove, 'remove')}
+       {renderButton(onEditTask, 'edit')}
+       {renderButton(onRemoveTask, 'remove')}
      </View>
   )
 }
