@@ -19,7 +19,7 @@ function Form({
 }) {
   const [text, setText] = useState(tarefa?.text || '');
   const [date, setDate] = useState(tarefa?.date || '');
-  const [color, setColor] = useState(tarefa?.color || '#fff');
+  const [color, setColor] = useState(tarefa?.color || '#eeeeee');
 
   const handleSubmitForm = () => {
     if (text){
@@ -27,7 +27,7 @@ function Form({
         text,
         date,
         done: false,
-        color: color !== '#fff' ? color :'#eeeeee',
+        color
       }
       handleAddTask(tarefa, index)
     }

@@ -5,7 +5,14 @@ import styles from './styles';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import DotMenu from './DotMenu/DotMenu';
 
-function Task({ index, tarefa, onRemoveTask, onEditTask }) {
+const DEFAULT_COLOR = '#eeeeee';
+
+function Task({
+  index,
+  tarefa,
+  onRemoveTask,
+  onEditTask,
+}) {
   const [tarefasCheck, setTarefasCheck] = useState(false);
   const [showDotMenu, setShowDotMenu] = useState(false);
 
@@ -18,9 +25,16 @@ function Task({ index, tarefa, onRemoveTask, onEditTask }) {
   }
 
   const { text, date, color} = tarefa;
+
+  const getColor = (firstColor, secondColor) => (
+    (color === DEFAULT_COLOR) ? firstColor : secondColor
+  )
+
   return (
         <View>
-          <View style={[styles.wrapperTasks, {backgroundColor: (color == '') ? '#eeeeee' : color}]}>
+          <View style={{
+            ...styles.wrapperTasks, backgroundColor: getColor('#eeeeee', color)
+          }}>
             <View style={{ paddingLeft: 10, paddingRight: 10}}>
               <CheckBox
                 disabled={false}
@@ -31,7 +45,11 @@ function Task({ index, tarefa, onRemoveTask, onEditTask }) {
             <View style={styles.wrapperTextAndDate}>
               <View>
                 <Text style={styles.taskText}>{text}</Text>
-                <Text style={[styles.taskDate, {color: (color == '') ? '#1b7070' : '#ffffff'}]}>{date && new Date(date).toISOString().slice(0, 10)}</Text>
+                <Text style={{
+                  ...styles.taskDate, color: getColor('#1b7070','#ffffff')
+                }}>
+                  {date && new Date(date).toISOString().slice(0, 10)}
+                </Text>
               </View>
             </View>
             <TouchableWithoutFeedback onPress = {handleDotMenu}>
@@ -39,7 +57,13 @@ function Task({ index, tarefa, onRemoveTask, onEditTask }) {
             </TouchableWithoutFeedback>
           </View>
           {
-            showDotMenu && <DotMenu index={index} onRemoveTask={onRemoveTask} onEditTask={onEditTask}/>
+            showDotMenu && (
+              <DotMenu
+                index={index}
+                onEditTask={onEditTask}
+                onRemoveTask={onRemoveTask}
+              />
+            )
           }
         </View>
   )
