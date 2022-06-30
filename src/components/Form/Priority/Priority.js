@@ -14,6 +14,7 @@ function Priority({ selectedColor, setColor }) {
       .map((key, index) => {
         const COLOR = PRIORITY_COLOR[key];
         const isSelected = COLOR === selectedColor;
+        const underlayColor = `${COLOR}bd`;
 
         const style = {
           ...styles.buttonPriority,
@@ -24,6 +25,7 @@ function Priority({ selectedColor, setColor }) {
           <TouchableHighlight
             key={PRIORITY_COLOR[key]}
             style={isSelected ? { ...style, ...styles.selectedPriority } : style}
+            underlayColor={underlayColor}
             onPress = {() => setColor(COLOR)}
           >
             <Text style={styles.textPriority}>{key}</Text>
