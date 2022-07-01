@@ -8,7 +8,6 @@ import DotMenu from './DotMenu/DotMenu';
 const DEFAULT_COLOR = '#eeeeee';
 
 function Task({
-  index,
   tarefa,
   onRemoveTask,
   onEditTask,
@@ -59,7 +58,7 @@ function Task({
           {
             showDotMenu && (
               <DotMenu
-                index={index}
+                id={tarefa.id}
                 onEditTask={onEditTask}
                 onRemoveTask={onRemoveTask}
               />

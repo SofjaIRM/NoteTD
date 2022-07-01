@@ -9,45 +9,41 @@ import styles from './styles';
 function App() {
   const [listaTarefas, setListaTarefas] = useState([]);
   const [toggleShowForm, setToggleShowForm] = useState(false);
-  const [index, setIndex] = useState(-1);
+  const [taskId, setTaskId] = useState(null);
 
   const IS_EMPTY_TASK_LIST = !listaTarefas.length;
   const EMPTY_TASK_LIST_TEXT = 'Não tens nenhuma tarefa. Queres começar a adicionar tarefas?';
 
   const clearFormState = () => {
     setToggleShowForm(false);
-    setIndex(-1);
+    setTaskId(null);
   }
 
-  const handleAddListItem = (task, index) => {
-    const shouldUpdateTask = index !== -1;
-    const currentListaTarefas = listaTarefas.slice();
+  const handleAddListItem = (task) => {
+    const shouldUpdateTask = task.id;
+    let currentListaTarefas = shouldUpdateTask ? [] : listaTarefas.slice();
 
     if (shouldUpdateTask) {
-      currentListaTarefas[index] = task;
+      currentListaTarefas = listaTarefas.map((tarefa) => (
+        (tarefa.id === task.id) ? task : tarefa
+      ))
     }
     else {
-      currentListaTarefas.push(task);
+      currentListaTarefas.push({...task, id: new Date().getTime()});
     }
     setListaTarefas(currentListaTarefas);
-    clearFormState()
+    clearFormState();
   }
 
-  const handleEditTask = (index) => {
-    setIndex(index);
+  const handleEditTask = (id) => {
+    setTaskId(id);
     setToggleShowForm(true);
   }
 
-  const handleRemoveTask = (index) => {
-    const shouldRemoveTask = index !== -1;
-
-    if(shouldRemoveTask) {
-      let currentListaTarefas = listaTarefas.slice();
-      currentListaTarefas.splice(index, 1);
-      setListaTarefas(currentListaTarefas);
-    }
+  const handleRemoveTask = (delete_id) => {
+    let currentListaTarefas = listaTarefas.filter(({id}) => id !== delete_id);
+    setListaTarefas(currentListaTarefas);
   }
-
   return (
     !toggleShowForm
     ?
@@ -67,10 +63,9 @@ function App() {
       </View>
     :
       <Form
-        index={index}
         handleAddTask={handleAddListItem}
         cancelAddTask={clearFormState}
-        tarefa={listaTarefas[index]}
+        tarefa={listaTarefas.find(({ id }) => id === taskId)}
       />
   );
 }

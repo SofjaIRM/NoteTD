@@ -7,19 +7,15 @@ function List({
   handleEditTask,
   handleRemoveTask,
 }) {
-  const tasks = () => {
-    return listaTarefas.map((task, index) => {
-      return(
-        <Task
-          key={'task' + index}
-          index={index}
-          tarefa={task}
-          onEditTask={handleEditTask}
-          onRemoveTask={handleRemoveTask}
-        />
-      )
-    });
-  }
+  const tasks = () => (
+    listaTarefas.map((task) => (
+      <Task
+        key={task.id}
+        tarefa={task}
+        onEditTask={handleEditTask}
+        onRemoveTask={handleRemoveTask}
+      />
+  )))
 
   return (
     <View>

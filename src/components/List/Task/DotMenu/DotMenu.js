@@ -3,7 +3,7 @@ import { View } from 'react-native'
 import Icon from 'react-native-vector-icons/FontAwesome';
 import styles from './styles'
 
-function DotMenu({ index, onEditTask, onRemoveTask }){
+function DotMenu({ id, onEditTask, onRemoveTask }){
   const renderButton = (callback, type) => {
     const title = {
       edit: 'editar tarefa',
@@ -19,7 +19,7 @@ function DotMenu({ index, onEditTask, onRemoveTask }){
         name={type}
         backgroundColor="#de1f46"
         borderRadius={0}
-        onPress={() => callback(index)}
+        onPress={() => callback(id)}
       >
         {title[type].toUpperCase()}
       </Icon.Button>

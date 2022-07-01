@@ -12,7 +12,6 @@ import DatePicker from './DatePicker/DatePicker';
 import FormInput from './FormInput/FormInput';
 
 function Form({
-  index,
   tarefa,
   handleAddTask,
   cancelAddTask,
@@ -23,13 +22,14 @@ function Form({
 
   const handleSubmitForm = () => {
     if (text){
-      const tarefa = {
+      const data = {
+        ...tarefa,
         text,
         date,
         done: false,
         color
       }
-      handleAddTask(tarefa, index)
+      handleAddTask(data)
     }
 
     else{
