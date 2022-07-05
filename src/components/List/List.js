@@ -6,6 +6,8 @@ function List({
   listaTarefas,
   handleEditTask,
   handleRemoveTask,
+  activeMenu,
+  setActiveMenu,
 }) {
   const tasks = () => (
     listaTarefas.map((task) => (
@@ -14,6 +16,8 @@ function List({
         tarefa={task}
         onEditTask={handleEditTask}
         onRemoveTask={handleRemoveTask}
+        activeMenu={activeMenu}
+        setActiveMenu={setActiveMenu}
       />
   )))
 

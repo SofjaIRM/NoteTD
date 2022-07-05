@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Text, View, TouchableHighlight } from 'react-native';
+import { Text, View, TouchableWithoutFeedback } from 'react-native';
 import Form from './Form/Form';
 import List from './List/List';
 import Title from './Title/Title'
@@ -10,6 +10,7 @@ function App() {
   const [listaTarefas, setListaTarefas] = useState([]);
   const [toggleShowForm, setToggleShowForm] = useState(false);
   const [taskId, setTaskId] = useState(null);
+  const [activeMenu, setActiveMenu] = useState(null);
 
   const IS_EMPTY_TASK_LIST = !listaTarefas.length;
   const EMPTY_TASK_LIST_TEXT = 'Não tens nenhuma tarefa. Queres começar a adicionar tarefas?';
@@ -17,6 +18,7 @@ function App() {
   const clearFormState = () => {
     setToggleShowForm(false);
     setTaskId(null);
+    setActiveMenu(null);
   }
 
   const handleAddListItem = (task) => {
@@ -44,23 +46,32 @@ function App() {
     let currentListaTarefas = listaTarefas.filter(({id}) => id !== delete_id);
     setListaTarefas(currentListaTarefas);
   }
+
+  const hideDotMenu = () => {
+    if(activeMenu) setActiveMenu(null);
+  }
+
   return (
     !toggleShowForm
     ?
-      <View style={IS_EMPTY_TASK_LIST ? styles.wrapperAppEmptyTask : styles.wrapperApp}>
-        <Title tasks={listaTarefas} />
-        <List
-          listaTarefas={listaTarefas}
-          handleEditTask={handleEditTask}
-          handleRemoveTask={handleRemoveTask}
-        />
-        <View style={styles.textView}>
-          <Text style={styles.emptyTaskListText}>
-            {IS_EMPTY_TASK_LIST ? EMPTY_TASK_LIST_TEXT : ''}
-          </Text>
+      <TouchableWithoutFeedback onPress={(e) => hideDotMenu()}>
+        <View style={IS_EMPTY_TASK_LIST ? styles.wrapperAppEmptyTask : styles.wrapperApp}>
+          <Title tasks={listaTarefas} />
+          <List
+            listaTarefas={listaTarefas}
+            handleEditTask={handleEditTask}
+            handleRemoveTask={handleRemoveTask}
+            activeMenu={activeMenu}
+            setActiveMenu={setActiveMenu}
+          />
+          <View style={styles.textView}>
+            <Text style={styles.emptyTaskListText}>
+              {IS_EMPTY_TASK_LIST ? EMPTY_TASK_LIST_TEXT : ''}
+            </Text>
+          </View>
+          <AddTaskButton tasks={listaTarefas} toggleShowForm={setToggleShowForm} />
         </View>
-        <AddTaskButton tasks={listaTarefas} toggleShowForm={setToggleShowForm} />
-      </View>
+      </TouchableWithoutFeedback>
     :
       <Form
         handleAddTask={handleAddListItem}

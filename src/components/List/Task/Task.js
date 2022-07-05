@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import CheckBox from 'expo-checkbox';
 import { View, Text, TouchableWithoutFeedback } from 'react-native';
 import styles from './styles';
@@ -11,16 +11,28 @@ function Task({
   tarefa,
   onRemoveTask,
   onEditTask,
+  activeMenu,
+  setActiveMenu,
 }) {
   const [tarefasCheck, setTarefasCheck] = useState(false);
   const [showDotMenu, setShowDotMenu] = useState(false);
+
+  const isCurrentActiveMenu = tarefa.id === activeMenu;
+
+  useEffect(() => {
+    isCurrentActiveMenu
+      ? setShowDotMenu(!showDotMenu)
+      : setShowDotMenu(false);
+  }, [activeMenu]);
 
   const handleToggleDone = () => {
 		setTarefasCheck(!tarefasCheck);
   }
 
   const handleDotMenu = () => {
-    setShowDotMenu(!showDotMenu);
+    isCurrentActiveMenu
+      ? setShowDotMenu(!showDotMenu)
+      : setActiveMenu(tarefa.id);
   }
 
   const { text, date, color} = tarefa;
