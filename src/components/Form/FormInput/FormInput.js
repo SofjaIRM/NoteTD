@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './styles';
-import {Text, TextInput, View} from 'react-native';
+import { Text, TextInput, View } from 'react-native';
 
 function FormInput({ setText, text }) {
   return (

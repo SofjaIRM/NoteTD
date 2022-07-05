@@ -1,7 +1,7 @@
 import React from 'react';
-import styles from './styles';
-import {Text, View} from 'react-native';
+import { Text, View } from 'react-native';
 import Logo from './Logo/Logo';
+import styles from './styles';
 
 function Title({ tasks }) {
   return (

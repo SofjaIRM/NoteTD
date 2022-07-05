@@ -10,11 +10,7 @@ import styles from './styles';
 import DatePicker from './DatePicker/DatePicker';
 import FormInput from './FormInput/FormInput';
 
-function Form({
-  tarefa,
-  handleAddTask,
-  cancelAddTask,
-}) {
+function Form({ tarefa, handleAddTask, cancelAddTask }) {
   const [text, setText] = useState(tarefa?.text || '');
   const [date, setDate] = useState(tarefa?.date || '');
   const [color, setColor] = useState(tarefa?.color || '#eeeeee');
