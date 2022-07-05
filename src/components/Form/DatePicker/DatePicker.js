@@ -7,8 +7,8 @@ function DatePicker({ tarefa, date, setDate }) {
   const [showDatePicker, setShowDatePicker] = useState(false);
 
   const handleDateChange = (e, date) => {
-    setDate(date.toString());
     setShowDatePicker(false);
+    setDate(date.toString());
   };
 
   return (
