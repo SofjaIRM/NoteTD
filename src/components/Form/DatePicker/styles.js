@@ -14,6 +14,17 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     color: '#000',
   },
+  input: {
+    fontSize: 16,
+    borderWidth: 0.5,
+    borderColor: '#a7a7a7',
+    paddingLeft: 10,
+    fontFamily: 'notoserif',
+    borderRadius: 2,
+    width: '100%',
+    height: 37,
+    textAlign: 'center'
+  },
 });
 
 export default styles;
