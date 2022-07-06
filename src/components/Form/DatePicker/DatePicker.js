@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import styles from './styles';
-import { Text, TextInput, View } from 'react-native';
+import FormInput from '../FormInput/FormInput';
 import DateTimePicker from '@react-native-community/datetimepicker';
 
 function DatePicker({ task, date, setDate }) {
@@ -12,8 +11,7 @@ function DatePicker({ task, date, setDate }) {
   };
 
   return (
-    <View style={styles.wrapperDatePicker} >
-      <Text style={styles.textFormTitle}>{'completion date'.toUpperCase()}</Text>
+    <>
       {
         showDatePicker &&
         <DateTimePicker
@@ -25,17 +23,15 @@ function DatePicker({ task, date, setDate }) {
           textColor="red"
         />
       }
-      <TextInput
-        style={styles.input}
-        value={date && new Date(date).toISOString().slice(0, 10)}
+      <FormInput
+        title="completion date"
+        setText={setDate}
+        text={date && new Date(date).toISOString().slice(0, 10)}
         onPressIn={()=> setShowDatePicker(true)}
-        textAlign='center'
-        caretHidden={true}
-        placeholder='Set a completion date'
-        placeholderTextColor = '#c5c5c9'
-        underlineColorAndroid = 'transparent'
+        placeholder="Set a completion date"
+        caretHidden
       />
-    </View>
+    </>
   )
 }
 

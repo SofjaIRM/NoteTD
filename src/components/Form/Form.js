@@ -37,7 +37,12 @@ function Form({ task, handleAddTask, cancelAddTask }) {
 
   return (
     <View style={styles.wrapperForm}>
-      <FormInput text={text} setText={setText}/>
+      <FormInput
+        title="task"
+        text={text}
+        setText={setText}
+        placeholder="Insert a new task"
+      />
       <DatePicker task={task} date={date} setDate={setDate}/>
       <Priority selectedColor={color} setColor={setColor}/>
         <View style={styles.buttonView}>

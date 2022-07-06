@@ -2,17 +2,26 @@ import React from 'react';
 import styles from './styles';
 import { Text, TextInput, View } from 'react-native';
 
-function FormInput({ setText, text }) {
+function FormInput({
+  title,
+  setText,
+  text,
+  placeholder,
+  caretHidden,
+  onPressIn
+}) {
   return (
     <View style={styles.wrapperTextInput}>
-      <Text style={styles.textFormTitle}>{'task'.toUpperCase()}</Text>
+      <Text style={styles.textFormTitle}>{`${title}`.toUpperCase()}</Text>
       <TextInput
         style = {styles.input}
         onChangeText = {setText}
         value = {text}
-        placeholderTextColor = '#c5c5c9'
-        placeholder = "Insert a new task"
-        underlineColorAndroid = 'transparent'
+        caretHidden={caretHidden}
+        onPressIn={onPressIn}
+        placeholderTextColor='#c5c5c9'
+        placeholder={placeholder}
+        underlineColorAndroid='transparent'
       />
     </View>
   )
