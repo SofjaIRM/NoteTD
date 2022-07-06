@@ -2,12 +2,16 @@ import React, { useState } from 'react';
 import FormInput from '../FormInput/FormInput';
 import DateTimePicker from '@react-native-community/datetimepicker';
 
-function DatePicker({ task, date, setDate }) {
+function DatePicker({ date, setDate }) {
   const [showDatePicker, setShowDatePicker] = useState(false);
 
-  const handleDateChange = (e, date) => {
+  const currentDate = () => date ? new Date(date) : new Date();
+
+  const handleDateChange = (e, selectedDate) => {
     setShowDatePicker(false);
-    setDate(date.toString());
+    if(e.type === 'set') {
+      setDate(selectedDate.toString());
+    }
   };
 
   return (
@@ -16,7 +20,7 @@ function DatePicker({ task, date, setDate }) {
         showDatePicker &&
         <DateTimePicker
           mode="date"
-          value={task?.date ? new Date(task.date) : new Date()}
+          value={() => currentDate()}
           style={{flex:1}}
           minimumDate={new Date()}
           onChange={handleDateChange}
