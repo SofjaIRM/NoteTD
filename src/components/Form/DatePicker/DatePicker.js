@@ -3,7 +3,7 @@ import styles from './styles';
 import { Text, TextInput, View } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 
-function DatePicker({ tarefa, date, setDate }) {
+function DatePicker({ task, date, setDate }) {
   const [showDatePicker, setShowDatePicker] = useState(false);
 
   const handleDateChange = (e, date) => {
@@ -13,12 +13,12 @@ function DatePicker({ tarefa, date, setDate }) {
 
   return (
     <View style={styles.wrapperDatePicker} >
-      <Text style={styles.textFormTitle}>{'Data de conclusão'.toUpperCase()}</Text>
+      <Text style={styles.textFormTitle}>{'completion date'.toUpperCase()}</Text>
       {
         showDatePicker &&
         <DateTimePicker
           mode="date"
-          value={tarefa?.date ? new Date(tarefa.date) : new Date()}
+          value={task?.date ? new Date(task.date) : new Date()}
           style={{flex:1}}
           minimumDate={new Date()}
           onChange={handleDateChange}
@@ -31,7 +31,7 @@ function DatePicker({ tarefa, date, setDate }) {
         onPressIn={()=> setShowDatePicker(true)}
         textAlign='center'
         caretHidden={true}
-        placeholder='Quando quer concluir esta tarefa?'
+        placeholder='Set a completion date'
         placeholderTextColor = '#c5c5c9'
         underlineColorAndroid = 'transparent'
       />

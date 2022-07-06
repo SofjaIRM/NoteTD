@@ -23,7 +23,7 @@ function AddTaskButton({ tasks, toggleShowForm }) {
       <View>
         {
           IS_EMPTY_TASK_LIST
-            ? <Text style={styles.addFistTaskTextButton}>Adicionar tarefa</Text>
+            ? <Text style={styles.addFistTaskTextButton}>Add task</Text>
             : <Icon name="plus" style={styles.addFirstTaskIcon}/>
         }
       </View>

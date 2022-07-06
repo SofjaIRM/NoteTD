@@ -13,7 +13,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: 2,
   },
-  listaTarefas: {
+  tasksList: {
     backgroundColor: '#FFEE11',
   },
   taskText:{

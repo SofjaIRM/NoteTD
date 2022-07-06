@@ -8,16 +8,16 @@ import DotMenu from './DotMenu/DotMenu';
 const DEFAULT_COLOR = '#eeeeee';
 
 function Task({
-  tarefa,
+  task,
   onRemoveTask,
   onEditTask,
   activeMenu,
   setActiveMenu,
 }) {
-  const [tarefasCheck, setTarefasCheck] = useState(false);
+  const [tasksCheck, setTasksCheck] = useState(false);
   const [showDotMenu, setShowDotMenu] = useState(false);
 
-  const isCurrentActiveMenu = tarefa.id === activeMenu;
+  const isCurrentActiveMenu = task.id === activeMenu;
 
   useEffect(() => {
     isCurrentActiveMenu
@@ -26,16 +26,16 @@ function Task({
   }, [activeMenu]);
 
   const handleToggleDone = () => {
-		setTarefasCheck(!tarefasCheck);
+		setTasksCheck(!tasksCheck);
   }
 
   const handleDotMenu = () => {
     isCurrentActiveMenu
       ? setShowDotMenu(!showDotMenu)
-      : setActiveMenu(tarefa.id);
+      : setActiveMenu(task.id);
   }
 
-  const { text, date, color} = tarefa;
+  const { text, date, color} = task;
 
   const getColor = (firstColor, secondColor) => (
     (color === DEFAULT_COLOR) ? firstColor : secondColor
@@ -49,7 +49,7 @@ function Task({
             <View style={{ paddingLeft: 10, paddingRight: 10}}>
               <CheckBox
                 disabled={false}
-                value = {tarefasCheck}
+                value = {tasksCheck}
                 onValueChange = {handleToggleDone}
               />
             </View>
@@ -70,7 +70,7 @@ function Task({
           {
             showDotMenu && (
               <DotMenu
-                id={tarefa.id}
+                id={task.id}
                 onEditTask={onEditTask}
                 onRemoveTask={onRemoveTask}
               />

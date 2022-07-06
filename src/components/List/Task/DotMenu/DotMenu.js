@@ -6,8 +6,8 @@ import styles from './styles'
 function DotMenu({ id, onEditTask, onRemoveTask }){
   const renderButton = (callback, type) => {
     const title = {
-      edit: 'editar tarefa',
-      remove: 'remover tarefa'
+      edit: 'edit task',
+      remove: 'delete task'
     };
 
     const invalidType = !Object.keys(title).includes(type);

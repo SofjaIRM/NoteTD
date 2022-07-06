@@ -10,15 +10,15 @@ import styles from './styles';
 import DatePicker from './DatePicker/DatePicker';
 import FormInput from './FormInput/FormInput';
 
-function Form({ tarefa, handleAddTask, cancelAddTask }) {
-  const [text, setText] = useState(tarefa?.text || '');
-  const [date, setDate] = useState(tarefa?.date || '');
-  const [color, setColor] = useState(tarefa?.color || '#eeeeee');
+function Form({ task, handleAddTask, cancelAddTask }) {
+  const [text, setText] = useState(task?.text || '');
+  const [date, setDate] = useState(task?.date || '');
+  const [color, setColor] = useState(task?.color || '#eeeeee');
 
   const handleSubmitForm = () => {
     if (text){
       const data = {
-        ...tarefa,
+        ...task,
         text,
         date,
         done: false,
@@ -30,7 +30,7 @@ function Form({ tarefa, handleAddTask, cancelAddTask }) {
     else{
       Alert.alert(
         'Ooops...'.toUpperCase(),
-        'Parece que te esqueceste de inserir a tarefa',
+        'Looks like you forgot to enter the task',
       )
     }
   }
@@ -38,16 +38,16 @@ function Form({ tarefa, handleAddTask, cancelAddTask }) {
   return (
     <View style={styles.wrapperForm}>
       <FormInput text={text} setText={setText}/>
-      <DatePicker tarefa={tarefa} date={date} setDate={setDate}/>
+      <DatePicker task={task} date={date} setDate={setDate}/>
       <Priority selectedColor={color} setColor={setColor}/>
         <View style={styles.buttonView}>
           <TouchableHighlight
             onPress={handleSubmitForm}
             style={styles.buttonForm}
-            value={tarefa}
+            value={task}
           >
             <Text style={styles.buttonFormTitle}>
-              Guardar
+              Save
             </Text>
           </TouchableHighlight>
 
@@ -55,7 +55,7 @@ function Form({ tarefa, handleAddTask, cancelAddTask }) {
             onPress={cancelAddTask}
             style={styles.buttonFormCancel}>
             <Text style={styles.buttonFormTitle}>
-              Cancelar
+              Cancel
             </Text>
           </TouchableHighlight>
         </View>

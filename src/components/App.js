@@ -7,13 +7,13 @@ import AddTaskButton from './AddTaskButton/AddTaskButton';
 import styles from './styles';
 
 function App() {
-  const [listaTarefas, setListaTarefas] = useState([]);
+  const [tasksList, setTasksList] = useState([]);
   const [toggleShowForm, setToggleShowForm] = useState(false);
   const [taskId, setTaskId] = useState(null);
   const [activeMenu, setActiveMenu] = useState(null);
 
-  const IS_EMPTY_TASK_LIST = !listaTarefas.length;
-  const EMPTY_TASK_LIST_TEXT = 'Não tens nenhuma tarefa. Queres começar a adicionar tarefas?';
+  const IS_EMPTY_TASK_LIST = !tasksList.length;
+  const EMPTY_TASK_LIST_TEXT = 'You don\'t have any tasks. Do you want to start adding tasks?';
 
   const clearFormState = () => {
     setToggleShowForm(false);
@@ -21,19 +21,19 @@ function App() {
     setActiveMenu(null);
   }
 
-  const handleAddListItem = (task) => {
-    const shouldUpdateTask = task.id;
-    let currentListaTarefas = shouldUpdateTask ? [] : listaTarefas.slice();
+  const handleAddListItem = (newTask) => {
+    const shouldUpdateTask = newTask.id;
+    let currentTasksList = shouldUpdateTask ? [] : tasksList.slice();
 
     if (shouldUpdateTask) {
-      currentListaTarefas = listaTarefas.map((tarefa) => (
-        (tarefa.id === task.id) ? task : tarefa
+      currentTasksList = tasksList.map((task) => (
+        (task.id === newTask.id) ? newTask : task
       ))
     }
     else {
-      currentListaTarefas.push({...task, id: new Date().getTime()});
+      currentTasksList.push({...newTask, id: new Date().getTime()});
     }
-    setListaTarefas(currentListaTarefas);
+    setTasksList(currentTasksList);
     clearFormState();
   }
 
@@ -43,8 +43,8 @@ function App() {
   }
 
   const handleRemoveTask = (delete_id) => {
-    let currentListaTarefas = listaTarefas.filter(({id}) => id !== delete_id);
-    setListaTarefas(currentListaTarefas);
+    let currentTasksList = tasksList.filter(({id}) => id !== delete_id);
+    setTasksList(currentTasksList);
   }
 
   const hideDotMenu = () => {
@@ -56,9 +56,9 @@ function App() {
     ?
       <TouchableWithoutFeedback onPress={(e) => hideDotMenu()}>
         <View style={IS_EMPTY_TASK_LIST ? styles.wrapperAppEmptyTask : styles.wrapperApp}>
-          <Title tasks={listaTarefas} />
+          <Title tasks={tasksList} />
           <List
-            listaTarefas={listaTarefas}
+            tasksList={tasksList}
             handleEditTask={handleEditTask}
             handleRemoveTask={handleRemoveTask}
             activeMenu={activeMenu}
@@ -69,14 +69,14 @@ function App() {
               {IS_EMPTY_TASK_LIST ? EMPTY_TASK_LIST_TEXT : ''}
             </Text>
           </View>
-          <AddTaskButton tasks={listaTarefas} toggleShowForm={setToggleShowForm} />
+          <AddTaskButton tasks={tasksList} toggleShowForm={setToggleShowForm} />
         </View>
       </TouchableWithoutFeedback>
     :
       <Form
         handleAddTask={handleAddListItem}
         cancelAddTask={clearFormState}
-        tarefa={listaTarefas.find(({ id }) => id === taskId)}
+        task={tasksList.find(({ id }) => id === taskId)}
       />
   );
 }

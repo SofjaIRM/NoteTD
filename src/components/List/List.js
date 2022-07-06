@@ -3,17 +3,17 @@ import { View } from 'react-native';
 import Task from './Task/Task';
 
 function List({
-  listaTarefas,
+  tasksList,
   handleEditTask,
   handleRemoveTask,
   activeMenu,
   setActiveMenu,
 }) {
   const tasks = () => (
-    listaTarefas.map((task) => (
+    tasksList.map((task) => (
       <Task
         key={task.id}
-        tarefa={task}
+        task={task}
         onEditTask={handleEditTask}
         onRemoveTask={handleRemoveTask}
         activeMenu={activeMenu}

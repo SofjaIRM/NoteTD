@@ -4,9 +4,9 @@ import styles from './styles';
 
 function Priority({ selectedColor, setColor }) {
   const PRIORITY_COLOR = {
-    'alta': '#f54949',
-    'media': '#edc53a',
-    'baixar': '#c7e952'
+    'high': '#f54949',
+    'medium': '#edc53a',
+    'low': '#c7e952'
   }
 
   const priorityButton = () => (
