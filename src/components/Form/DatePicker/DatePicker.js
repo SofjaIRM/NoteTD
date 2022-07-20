@@ -5,8 +5,6 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 function DatePicker({ date, setDate }) {
   const [showDatePicker, setShowDatePicker] = useState(false);
 
-  const currentDate = () => date ? new Date(date) : new Date();
-
   const handleDateChange = (e, selectedDate) => {
     setShowDatePicker(false);
     if(e.type === 'set') {
@@ -20,7 +18,7 @@ function DatePicker({ date, setDate }) {
         showDatePicker &&
         <DateTimePicker
           mode="date"
-          value={() => currentDate()}
+          value={date ? new Date(date) : new Date()}
           style={{flex:1}}
           minimumDate={new Date()}
           onChange={handleDateChange}
