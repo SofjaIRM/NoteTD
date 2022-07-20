@@ -6,7 +6,7 @@ After four years, in 2022, I decided to do a refactoring on the code base as an 
 
 This app is a typical to-do list in which we can add tasks and delete or edit them. When we finish the task, we can check it as done.
 
-### Refactoring Improvements
+## Refactoring Improvements
 - Update all the dependencies
 - Added dependencies *[datetimepicker](https://www.npmjs.com/package/@react-native-community/datetimepicker)* and *[expo-checkbox](https://www.npmjs.com/package/expo-checkbox)* as the ones I was using before are now deprecated
 - Started using *[Expo Go](https://expo.dev/client)* to test the app
@@ -15,6 +15,10 @@ This app is a typical to-do list in which we can add tasks and delete or edit th
 - Show dot menu just on the task we want to edit or delete
 - Hide dot menu if we click outside the menu
 - Rename functions and components to english
+
+## Try out app
+- If you want to test this app the easy way, you need to install [Expo Go](https://expo.dev/client) on your smartphone and run ```yarn start``` on the terminal.
+- Open Expo Go, scan the QR code, and you're ready to go. :sunglasses:
 
 ## License
 
