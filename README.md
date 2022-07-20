@@ -15,3 +15,9 @@ This app is a typical to-do list in which we can add tasks and delete or edit th
 - Show dot menu just on the task we want to edit or delete
 - Hide dot menu if we click outside the menu
 - Rename functions and components to english
+
+## License
+
+[![License](https://img.shields.io/badge/license-MIT-a1356a)](LICENSE.txt)
+
+All code and documentation are (c) 2022 SofjaIRM and released under the [MIT License](LICENSE).
